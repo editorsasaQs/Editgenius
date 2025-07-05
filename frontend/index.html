@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>EditGenius AI</title>
+  <script>
+    async function uploadFiles() {
+      const form = document.getElementById("uploadForm");
+      const formData = new FormData(form);
+      const res = await fetch("http://localhost:5000/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+      document.getElementById("status").innerHTML =
+        "Download: <a href='" + data.download_url + "' target='_blank'>Click here</a>";
+    }
+  </script>
+</head>
+<body>
+  <h1>EditGenius AI</h1>
+  <form id="uploadForm" onsubmit="event.preventDefault(); uploadFiles();">
+    <label>Raw Video: <input type="file" name="video" required></label><br>
+    <label>Voiceover: <input type="file" name="voiceover" required></label><br>
+    <label>BGM: <input type="file" name="bgm" required></label><br>
+    <label>Logo: <input type="file" name="logo" required></label><br>
+    <button type="submit">Upload & Process</button>
+  </form>
+  <div id="status"></div>
+</body>
+</html>
